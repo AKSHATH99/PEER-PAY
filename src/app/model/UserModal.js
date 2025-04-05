@@ -1,26 +1,46 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
 
-const userSchema = new mongoose.Schema({
+
+const userSchema = new Schema({
+    Name: {
+        type:String,
+        required:true,
+    },
     UserName : {
-        type:String , 
-        require:true,
+        type: String, 
+        required: true,
+        unique: true,
     },
     Email : {
-        type:String , 
-        require:true,
+        type: String, 
+        required: true,
+        unique: true,
     },
     Password : {
-        type:String , 
-        require:true,
+        type: String, 
+        required: true,
     },
     Phone : {
-        type:String , 
-        require:true,
+        type: String, 
+        required: true,
     },
-   
-    
-
-})
+    isAdmin : {
+        type: Boolean, 
+        required: true,
+        default: false,
+    },
+    Groups:{
+        type: Schema.Types.ObjectId,
+        ref:"Group",
+    },
+    merchant_id:{
+        type: String,
+    },
+    isVerified:{
+        type: Boolean,
+        default: false,
+    },
+});
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
