@@ -9,12 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.12.1",
     "next": "15.2.3",
     "razorpay": "^2.9.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "resend": "^4.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
