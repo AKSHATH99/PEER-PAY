@@ -1,24 +1,16 @@
-const otpStore = new Map();
+import { redis } from "./Redis";
 
-export function storeOtp(email, otp) {
-    otpStore.set(email, {otp,
-        expiresAt: Date.now() + 5 * 60 * 1000
-    });
+export async function storeOtp(email, otp) {
+    await redis.set(`otp:${email}`, otp, { ex: 300 });
 }       
 
-export function verifyOtp(email, otp) {
-    if(!email || !otp) {
-        return false;
+export async function verifyOtp(email, otp) {
+    const storedOtp = await redis.get(`otp:${email}`);
+    console.log("ver otp",email)
+    console.log("stored>>",storedOtp)
+    console.log("mine",otp)
+    if(storedOtp==null){
+        return "timeout"
     }
-    const storedOtp = otpStore.get(email);
-
-    if (!storedOtp) {
-        return false;
-    }
-
-    const validOtp = storedOtp.otp === otp && Date.now() < storedOtp.expiresAt;
-    if(validOtp){
-        otpStore.delete(email);
-    }
-    return validOtp;
+    return storedOtp.toString() === otp.toString();
 }
